@@ -1,4 +1,5 @@
 $apps = @(
+    "Microsoft.549981C3F5F10"
     "Microsoft.3DBuilder"
     "Microsoft.BingFinance"
     "Microsoft.BingNews"
@@ -37,12 +38,23 @@ $apps = @(
     "Microsoft.ZuneMusic"
     "Microsoft.ZuneVideo"
    )
-
-foreach ($app in $apps) {
+Stop-Process -Name "OneDrive" -Force
+foreach ($app in $apps) 
+{
     Get-AppxPackage -AllUsers -Name $app | Remove-AppxPackage -AllUsers -ErrorAction SilentlyContinue
     Get-AppxProvisionedPackage -Online | Where-Object DisplayName -like $app | Remove-AppxProvisionedPackage -Online -ErrorAction SilentlyContinue | Out-Null
-    Write-Host "Удалён: $app"
+    Write-Host "Delete: $app"
 }
+Start-Process "$env:SystemRoot\SysWOW64\OneDriveSetup.exe" "/uninstall"
+Start-Process "$env:SystemRoot\System32\OneDriveSetup.exe" "/uninstall"
 
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\CloudContent" /v DisableWindowsConsumerFeatures /t REG_DWORD /d 1 /f | Out-Null
+
+Write-Host "Restart PC? (Y/N)" -ForegroundColor Yellow
+$response = Read-Host ""
+
+if ($response -eq 'Y' -or $response -eq 'y') 
+{
+    Restart-Computer -Force
+}
 
