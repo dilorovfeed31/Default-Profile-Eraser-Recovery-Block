@@ -1,5 +1,8 @@
 $apps = @(
     "Microsoft.549981C3F5F10"
+    "Microsoft.Todos"
+    "Microsoft.MSTeams"
+    "Microsoft.OutlookForWindows"
     "Microsoft.3DBuilder"
     "Microsoft.BingFinance"
     "Microsoft.BingNews"
@@ -50,11 +53,15 @@ Start-Process "$env:SystemRoot\System32\OneDriveSetup.exe" "/uninstall"
 
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\CloudContent" /v DisableWindowsConsumerFeatures /t REG_DWORD /d 1 /f | Out-Null
 
-Write-Host "Restart PC? (Y/N)" -ForegroundColor Yellow
-$response = Read-Host ""
+$title = "Restart"
+$message = "Restart your PC?"
+$choices = @("&Yes", "&No")
 
-if ($response -eq 'Y' -or $response -eq 'y') 
-{
+$decision = $Host.UI.PromptForChoice($title, $message, $choices, 1)
+
+if ($decision -eq 0) {
     Restart-Computer -Force
+} else {
+    Write-Host "Restart Canceled" -ForegroundColor Yellow
 }
 
