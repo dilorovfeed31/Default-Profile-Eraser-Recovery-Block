@@ -1,7 +1,13 @@
+Stop-Process -Name "*clipchamp*" -Force
+Stop-Process -Name "*teams*" -Force
+Stop-Process -Name "*xboxapp*" -Force
 $apps = @(
     "Microsoft.549981C3F5F10"
     "Microsoft.Todos"
-    "Microsoft.MSTeams"
+    "Microsoft.ClipChamp"
+    "Microsoft.Teams"
+    "MSTeams"
+    "Microsoft.Teams.WorkAndSchool"
     "Microsoft.OutlookForWindows"
     "Microsoft.3DBuilder"
     "Microsoft.BingFinance"
@@ -34,6 +40,7 @@ $apps = @(
     "Microsoft.WindowsSoundRecorder"
     "Microsoft.Xbox.TCUI"
     "Microsoft.XboxApp"
+    "Microsoft.Xbox"
     "Microsoft.XboxGameOverlay"
     "Microsoft.XboxGamingOverlay"
     "Microsoft.XboxIdentityProvider"
